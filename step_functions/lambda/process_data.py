@@ -22,15 +22,20 @@ def lambda_handler(event, context):
     Returns:
         {dict} -- Dictionary with Processed Bucket and Key(s)
     """
+    job_name = event['body']['job_name']
+    source_location = event['body']['source']
+    output_location = event['body']['output']
+
     try:
         logger.info('Fetching event data from previous step')
         client = boto3.client('glue')
-        job_name = 'WordCounterJob'
 
         job_response = client.start_job_run(
             JobName=job_name,
             Arguments={
-                '--JOB_NAME': job_name
+                '--JOB_NAME': job_name,
+                '--SOURCE_LOCATION': source_location,
+                '--OUTPUT_LOCATION': output_location
             },
             MaxCapacity=2.0
         )
