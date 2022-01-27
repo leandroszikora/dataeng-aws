@@ -70,7 +70,7 @@ def lambda_handler(event, context):
             }
         }
         start_state_machine(step_functions, response)
-        #delete_messages_from_queue(queue, messages_well)
+        delete_messages_from_queue(queue, messages_well)
     else:
         response = {
             'status_code': 400
